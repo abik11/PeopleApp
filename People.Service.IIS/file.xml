@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<people>
+  <person id="1336047674">
+    <firstName>Albert</firstName>
+    <lastName>Kozak</lastName>
+    <phoneNumber></phoneNumber>
+    <birthday>0001-01-01T12:00:00</birthday>
+    <address>
+      <street></street>
+      <houseNumber></houseNumber>
+      <appartmentNumber></appartmentNumber>
+      <postalCode></postalCode>
+    </address>
+  </person>
+  <person id="110428250">
+    <firstName>Paulina</firstName>
+    <lastName>Wielgus</lastName>
+    <phoneNumber></phoneNumber>
+    <birthday>0001-01-01T12:00:00</birthday>
+    <address>
+      <street></street>
+      <houseNumber></houseNumber>
+      <appartmentNumber></appartmentNumber>
+      <postalCode></postalCode>
+    </address>
+  </person>
+</people>

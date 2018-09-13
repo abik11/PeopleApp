@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="People.Desktop.Views.PeopleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:People.Desktop.Views"
+             xmlns:str="clr-namespace:People.Resources.Strings;assembly=People.Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+   <Grid Margin="10">
+      <StackPanel>
+         <DataGrid Name="dgPeople" Height="300" AutoGenerateColumns="False" FrozenColumnCount="2" ItemsSource="{Binding People}">
+
+            <i:Interaction.Triggers>
+               <i:EventTrigger EventName="UnloadingRow"> <!-- Row removing -->
+                  <i:InvokeCommandAction Command="{Binding EditCommand}" />
+               </i:EventTrigger>
+               <i:EventTrigger EventName="CellEditEnding"> <!-- Cell editing -->
+                  <i:InvokeCommandAction Command="{Binding EditCommand}" />
+               </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <DataGrid.Resources>
+               <Style TargetType="DataGridRow">
+                  <Style.Triggers>
+                     
+                     <EventTrigger RoutedEvent="MouseEnter">
+                        <EventTrigger.Actions>
+                           <BeginStoryboard>
+                              <Storyboard>
+                                 <ColorAnimation Duration="0:0:0.300" Storyboard.TargetProperty="(DataGridRow.Background).(SolidColorBrush.Color)" To="LightSteelBlue"></ColorAnimation>
+                              </Storyboard>
+                           </BeginStoryboard>
+                        </EventTrigger.Actions>
+                     </EventTrigger>
+
+                     <EventTrigger RoutedEvent="MouseLeave">
+                        <EventTrigger.Actions>
+                           <BeginStoryboard>
+                              <Storyboard>
+                                 <ColorAnimation Duration="0:0:0.300" Storyboard.TargetProperty="(DataGridRow.Background).(SolidColorBrush.Color)" To="White"></ColorAnimation>
+                              </Storyboard>
+                           </BeginStoryboard>
+                        </EventTrigger.Actions>
+                     </EventTrigger>
+
+                  </Style.Triggers>
+               </Style>
+            </DataGrid.Resources>
+            
+            <DataGrid.Columns>
+               <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.FirstName}" Binding="{Binding FirstName}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.LastName}" Binding="{Binding LastName}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.Street}" Binding="{Binding Address.Street}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.HouseNumber}" Binding="{Binding Address.HouseNumber}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.AppartmentNumber}" Binding="{Binding Address.AppartmentNumber}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.PostalCode}" Binding="{Binding Address.PostalCode}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.DayOfBirth}" Binding="{Binding Birthday, StringFormat=\{0:dd.MM.yyyy\}}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.Age}" Binding="{Binding Age, Mode=OneWay}"></DataGridTextColumn>
+               <DataGridTextColumn Header="{x:Static str:Strings.PhoneNumber}" Binding="{Binding PhoneNumber}"></DataGridTextColumn>
+            </DataGrid.Columns>
+            
+         </DataGrid>
+         <Grid>
+            <Grid.ColumnDefinitions>
+               <ColumnDefinition></ColumnDefinition>
+               <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{x:Static str:Strings.DeleteRowHint}" Margin="10" FontSize="10"></TextBlock>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+               <Button Name="btSave" Width="100" Margin="10" IsEnabled="{Binding IsModified}" Command="{Binding SaveCommand}">
+                  <StackPanel Orientation="Horizontal">
+                     <Image Source="/People.Resources;Component/Images/save_18.png" Stretch="None"></Image>
+                     <TextBlock Text="{x:Static str:Strings.Save}"></TextBlock>
+                  </StackPanel>
+               </Button>
+               <Button Name="btCancel" Width="100" Margin="10" IsEnabled="{Binding IsModified}" Command="{Binding CancelCommand}">
+                  <StackPanel Orientation="Horizontal">
+                     <Image Source="/People.Resources;Component/Images/cancel_18.png" Stretch="None"></Image>
+                     <TextBlock Text="{x:Static str:Strings.Cancel}"></TextBlock>
+                  </StackPanel>
+               </Button>
+            </StackPanel>
+         </Grid>
+      </StackPanel>
+   </Grid>
+</UserControl>
